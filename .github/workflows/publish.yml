@@ -61,6 +61,8 @@ jobs:
 
   github-release:
     runs-on: ubuntu-latest
+    permissions:
+      contents: write
     needs: [build-and-push-image]
     steps:
       - run: "echo \"RELEASE_TAG=${GITHUB_REF#refs/tags/}\" >> $GITHUB_ENV"
