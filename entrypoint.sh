@@ -8,7 +8,7 @@ if [ $# -eq 0 ]; then
 fi
 
 TARGET_DIR="$1"
-NETWORK="${2:-}"
+NETWORK="$2"
 
 # Create the target directory if it doesn't exist
 mkdir -p "$TARGET_DIR"
