@@ -4,10 +4,12 @@ cd config
 for network in sanchonet preview preprod mainnet; do
 	mkdir -p $network
 	cd $network && \
-		for filename in config.json config-bp.json topology.json {byron,shelley,alonzo,conway}-genesis.json; do
+		for filename in checkpoints.json config{,-bp}.json peer-snapshot.json topology{,-{genesis-mode,non-bootstrap-peers}}.json {byron,shelley,alonzo,conway}-genesis.json; do
 			curl -sL https://book.play.dev.cardano.org/environments/$network/$filename | sed \
 				-e 's/127.0.0.1/0.0.0.0/' > $filename
+			test -s $filename || rm -f $filename
 		done
+		grep "404 Not Found" *.json | cut -d: -f1 | sort -u | xargs rm -f
 	cd ..
 done
 
