@@ -13,6 +13,21 @@ for network in sanchonet preview preprod mainnet; do
 	cd ..
 done
 
+for network in preview preprod mainnet; do
+	baseurl=https://raw.githubusercontent.com/input-output-hk/mithril/refs/heads/main/mithril-infra/configuration
+	prefix=release
+	if [[ $network == "preview" ]]; then
+	       prefix=pre-release
+	fi
+	cd $network && \
+		for filename in ancillary.vkey genesis.vkey; do
+			curl -sLo $filename $baseurl/$prefix-$network/$filename
+			test -s $filename || rm -f $filename
+		done
+		grep "404 Not Found" *.vkey | cut -d: -f1 | sort -u | xargs rm -f
+	cd ..
+done
+
 if [[ ${HAIL_HYDRA:-false} ]]; then
 	network=devnet
 	baseurl=https://raw.githubusercontent.com/cardano-scaling/hydra/refs/heads/master/hydra-cluster/config
