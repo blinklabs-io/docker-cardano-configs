@@ -9,7 +9,7 @@ for network in sanchonet preview preprod mainnet; do
 				-e 's/127.0.0.1/0.0.0.0/' > $filename
 			test -s $filename || rm -f $filename
 		done
-		grep "404 Not Found" *.json *.plutus 2>/dev/null | cut -d: -f1 | sort -u | xargs rm -f
+		grep "404.*Not Found" *.json *.plutus 2>/dev/null | cut -d: -f1 | sort -u | xargs rm -f
 	cd ..
 done
 
@@ -24,7 +24,7 @@ for network in preview preprod mainnet; do
 			curl -sLo $filename $baseurl/$prefix-$network/$filename
 			test -s $filename || rm -f $filename
 		done
-		grep "404 Not Found" *.vkey | cut -d: -f1 | sort -u | xargs rm -f
+		grep "404.*Not Found" *.vkey | cut -d: -f1 | sort -u | xargs rm -f
 	cd ..
 done
 
@@ -44,11 +44,26 @@ if [[ "${HAIL_HYDRA:-false}" == "true" ]]; then
 			curl -sLo $genesis-genesis.json $baseurl/$network/genesis-$genesis.json
 			test -s $genesis-genesis.json || rm -f $genesis-genesis.json
 		done
-		grep "404 Not Found" *-genesis.json 2>/dev/null | cut -d: -f1 | sort -u | xargs rm -f
+		grep "404.*Not Found" *-genesis.json 2>/dev/null | cut -d: -f1 | sort -u | xargs rm -f
 		mkdir -p keys && cd keys
 		for filename in kes.skey vrf.skey opcert.cert byron-delegat{ion.cert,e.key}; do
 			curl -sLo $filename $baseurl/$network/$filename
 		done
 		cd ..
+	cd ..
+fi
+
+if [[ "${LEIOS_GO_BRR:-false}" == "true" ]]; then
+	network=leios
+	ref=next-2026-05-15
+	baseurl=https://raw.githubusercontent.com/input-output-hk/cardano-playground/refs/heads/$ref/docs/environments-pre
+	mkdir -p $network
+	cd $network && \
+		for filename in checkpoints.json config{,-bp}.json guardrails-script.plutus peer-snapshot.json topology{,-{genesis-mode,non-bootstrap-peers}}.json {byron,shelley,alonzo,conway,dijkstra}-genesis.json; do
+			curl -sL $baseurl/$network/$filename | sed \
+				-e 's/127.0.0.1/0.0.0.0/' > $filename
+			test -s $filename || rm -f $filename
+		done
+		grep "404.*Not Found" *.json *.plutus 2>/dev/null | cut -d: -f1 | sort -u | xargs rm -f
 	cd ..
 fi
