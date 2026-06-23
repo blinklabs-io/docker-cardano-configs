@@ -55,10 +55,11 @@ fi
 
 if [[ "${LEIOS_GO_BRR:-false}" == "true" ]]; then
 	network=leios
+	target=musashi
 	ref=next-2026-05-15
 	baseurl=https://raw.githubusercontent.com/input-output-hk/cardano-playground/refs/heads/$ref/docs/environments-pre
-	mkdir -p $network
-	cd $network && \
+	mkdir -p $target
+	cd $target && \
 		for filename in checkpoints.json config{,-bp}.json guardrails-script.plutus peer-snapshot.json topology{,-{genesis-mode,non-bootstrap-peers}}.json {byron,shelley,alonzo,conway,dijkstra}-genesis.json; do
 			curl -sL $baseurl/$network/$filename | sed \
 				-e 's/127.0.0.1/0.0.0.0/' > $filename
