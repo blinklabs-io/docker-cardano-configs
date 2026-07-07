@@ -1,10 +1,10 @@
 #!/usr/bin/env bash
 
 cd config
-for network in sanchonet preview preprod mainnet; do
+for network in preview preprod mainnet; do
 	mkdir -p $network
 	cd $network && \
-		for filename in checkpoints.json config{,-bp}.json guardrails-script.plutus peer-snapshot.json topology{,-{genesis-mode,non-bootstrap-peers}}.json {byron,shelley,alonzo,conway,dijkstra}-genesis.json; do
+		for filename in checkpoints.json config{,-bp}.json guardrails-script.plutus peer-snapshot.json topology{,-{genesis-mode,non-bootstrap-peers}}.json {byron,shelley,alonzo,conway,dijkstra}-genesis.json tracer-config.json; do
 			curl -sL https://book.play.dev.cardano.org/environments/$network/$filename | sed \
 				-e 's/127.0.0.1/0.0.0.0/' > $filename
 			test -s $filename || rm -f $filename
@@ -28,7 +28,7 @@ for network in preview preprod mainnet; do
 	cd ..
 done
 
-if [[ "${HAIL_HYDRA:-false}" == "true" ]]; then
+if [[ "${HAIL_HYDRA:-true}" == "true" ]]; then
 	network=devnet
 	baseurl=https://raw.githubusercontent.com/cardano-scaling/hydra/refs/heads/master/hydra-cluster/config
 	mkdir -p $network
@@ -53,14 +53,13 @@ if [[ "${HAIL_HYDRA:-false}" == "true" ]]; then
 	cd ..
 fi
 
-if [[ "${LEIOS_GO_BRR:-false}" == "true" ]]; then
+if [[ "${LEIOS_GO_BRR:-true}" == "true" ]]; then
 	network=leios
 	target=musashi
-	ref=next-2026-05-15
-	baseurl=https://raw.githubusercontent.com/input-output-hk/cardano-playground/refs/heads/$ref/docs/environments-pre
+	baseurl=https://book.play.dev.cardano.org/environments-pre
 	mkdir -p $target
 	cd $target && \
-		for filename in checkpoints.json config{,-bp}.json guardrails-script.plutus peer-snapshot.json topology{,-{genesis-mode,non-bootstrap-peers}}.json {byron,shelley,alonzo,conway,dijkstra}-genesis.json; do
+		for filename in checkpoints.json config{,-bp}.json guardrails-script.plutus peer-snapshot.json topology{,-{genesis-mode,non-bootstrap-peers}}.json {byron,shelley,alonzo,conway,dijkstra}-genesis.json tracer-config.json; do
 			curl -sL $baseurl/$network/$filename | sed \
 				-e 's/127.0.0.1/0.0.0.0/' > $filename
 			test -s $filename || rm -f $filename
