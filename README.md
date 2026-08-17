@@ -22,7 +22,8 @@ Published images are available from both registries:
 - GitHub Container Registry: `ghcr.io/blinklabs-io/cardano-configs`
 
 Use `latest` for the most recent image, or pin a version tag such as
-`v20260817-1` for reproducible builds.
+`20260817-1` for reproducible builds. For stronger reproducibility, pin an
+image digest (`@sha256:...`) or use immutable tags in the registry.
 
 ### As a Build Stage
 
