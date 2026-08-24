@@ -14,6 +14,17 @@ This project provides Cardano network configuration files in a container image f
 
 ## Usage
 
+### Published Images
+
+Published images are available from both registries:
+
+- Docker Hub: `blinklabs/cardano-configs`
+- GitHub Container Registry: `ghcr.io/blinklabs-io/cardano-configs`
+
+Use `latest` for the most recent image, or pin a version tag such as
+`20260817-1` for reproducible builds. For stronger reproducibility, pin an
+image digest (`@sha256:...`) or use immutable tags in the registry.
+
 ### As a Build Stage
 
 The most common use case is to copy configuration files during Docker multi-stage builds:
@@ -32,10 +43,10 @@ You can also run the container directly to copy configuration files to a mounted
 
 ```bash
 # Copy all network configurations
-docker run -v $(pwd)/configs:/output blinklabs/cardano-configs:latest /output
+docker run -v "$(pwd)/configs:/output" ghcr.io/blinklabs-io/cardano-configs:latest /output
 
 # Copy specific network configuration
-docker run -v $(pwd)/configs:/output blinklabs/cardano-configs:latest /output mainnet
+docker run -v "$(pwd)/configs:/output" ghcr.io/blinklabs-io/cardano-configs:latest /output mainnet
 ```
 
 ## Building
@@ -63,12 +74,6 @@ To include Hydra devnet configurations:
 ```bash
 HAIL_HYDRA=true ./update.sh
 ```
-
-## Docker Images
-
-The image is available at:
-- Docker Hub: `blinklabs/cardano-configs`
-- GitHub Container Registry: `ghcr.io/blinklabs-io/cardano-configs`
 
 ## License
 
