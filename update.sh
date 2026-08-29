@@ -28,30 +28,11 @@ for network in preview preprod mainnet; do
 	cd ..
 done
 
-if [[ "${HAIL_HYDRA:-true}" == "true" ]]; then
-	network=devnet
-	baseurl=https://raw.githubusercontent.com/cardano-scaling/hydra/refs/heads/master/hydra-cluster/config
-	mkdir -p $network
-	cd $network && \
-		curl -sL $baseurl/$network/cardano-node.json | sed \
-			-e 's/genesis-byron/byron-genesis/g' \
-			-e 's/genesis-shelley/shelley-genesis/g' \
-			-e 's/genesis-alonzo/alonzo-genesis/g' \
-			-e 's/genesis-conway/conway-genesis/g' \
-			-e 's/genesis-dijkstra/dijkstra-genesis/g' \
-		> config.json
-		for genesis in byron shelley alonzo conway dijkstra; do
-			curl -sLo $genesis-genesis.json $baseurl/$network/genesis-$genesis.json
-			test -s $genesis-genesis.json || rm -f $genesis-genesis.json
-		done
-		grep "404.*Not Found" *-genesis.json 2>/dev/null | cut -d: -f1 | sort -u | xargs rm -f
-		mkdir -p keys && cd keys
-		for filename in kes.skey vrf.skey opcert.cert byron-delegat{ion.cert,e.key}; do
-			curl -sLo $filename $baseurl/$network/$filename
-		done
-		cd ..
-	cd ..
-fi
+# config/devnet is maintained in this repository and is deliberately not
+# fetched from cardano-scaling/hydra any more. It started as a copy of the
+# hydra devnet, but it now diverges on protocol version, slot and epoch
+# timing, and Plutus cost models, and re-fetching silently reverted all of
+# that. The keys and the Dijkstra genesis are committed alongside it.
 
 if [[ "${LEIOS_GO_BRR:-true}" == "true" ]]; then
 	network=leios
