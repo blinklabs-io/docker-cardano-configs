@@ -60,8 +60,7 @@ if [[ "${LEIOS_GO_BRR:-true}" == "true" ]]; then
 	mkdir -p $target
 	cd $target && \
 		for filename in checkpoints.json config{,-bp}.json guardrails-script.plutus peer-snapshot.json topology{,-{genesis-mode,non-bootstrap-peers}}.json {byron,shelley,alonzo,conway,dijkstra}-genesis.json tracer-config.json; do
-			curl -sL $baseurl/$network/$filename | sed \
-				-e 's/127.0.0.1/0.0.0.0/' > $filename
+			curl -sL $baseurl/$network/$filename > $filename
 			test -s $filename || rm -f $filename
 		done
 		grep "404.*Not Found" *.json *.plutus 2>/dev/null | cut -d: -f1 | sort -u | xargs rm -f
