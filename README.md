@@ -10,6 +10,7 @@ This project provides Cardano network configuration files in a container image f
 - preprod  
 - preview
 - sanchonet
+- dijkstra (DijkstraNet, network magic 6)
 - devnet (a single-node development network maintained in this repository)
 
 ## Usage
@@ -59,6 +60,7 @@ docker build -t cardano-configs .
 
 Configuration files are fetched from:
 - **Standard networks**: https://book.play.dev.cardano.org/environments/
+- **DijkstraNet**: https://book.play.dev.cardano.org/environments-pre/dijkstra/
 - **Devnet**: maintained in this repository under `config/devnet`. It began as a copy of the hydra devnet (https://github.com/cardano-scaling/hydra) but now diverges on protocol version, slot and epoch timing, and Plutus cost models, so `update.sh` no longer re-fetches it.
 
 ## Updating Configurations
