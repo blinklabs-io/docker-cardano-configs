@@ -13,6 +13,14 @@ for network in preview preprod mainnet; do
 	cd ..
 done
 
+# DijkstraNet is published separately from the standard environments.
+mkdir -p dijkstra
+for filename in config.json db-sync-config.json submit-api-config.json topology.json peer-snapshot.json byron-genesis.json shelley-genesis.json alonzo-genesis.json conway-genesis.json dijkstra-genesis.json tracer-config.json guardrails-script.plutus; do
+	curl --fail --silent --show-error --location \
+		"https://book.play.dev.cardano.org/environments-pre/dijkstra/$filename" \
+		--output "dijkstra/$filename" || exit 1
+done
+
 for network in preview preprod mainnet; do
 	baseurl=https://raw.githubusercontent.com/input-output-hk/mithril/refs/heads/main/mithril-infra/configuration
 	prefix=release
