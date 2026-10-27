@@ -19,6 +19,7 @@ for filename in config.json db-sync-config.json submit-api-config.json topology.
 	curl --fail --silent --show-error --location \
 		"https://book.play.dev.cardano.org/environments-pre/dijkstra/$filename" \
 		--output "dijkstra/$filename" || exit 1
+	sed -i 's/127\.0\.0\.1/0.0.0.0/g' "dijkstra/$filename"
 done
 
 for network in preview preprod mainnet; do
