@@ -1,6 +1,22 @@
 #!/usr/bin/env bash
 
 cd config
+
+for network in prime-testnet prime-mainnet vector-testnet vector-mainnet; do
+	case "$network" in
+		prime-testnet) source=prime-docker/main/testnet/node-10.1.4 ;;
+		prime-mainnet) source=prime-mainnet-docker/main/mainnet/node-10.1.4 ;;
+		vector-testnet) source=vector-docker/main/public-testnet/node-10.4.1 ;;
+		vector-mainnet) source=vector-mainnet-docker/main/mainnet/node-10.5.3 ;;
+	esac
+	baseurl="https://raw.githubusercontent.com/Apex-Fusion/$source/config/node"
+	for filename in configuration.yaml topology.json genesis/byron/genesis.json genesis/shelley/genesis{,.alonzo,.conway}.json; do
+		mkdir -p "$network/$(dirname "$filename")" || exit 1
+		curl --fail --silent --show-error --location \
+			"$baseurl/$filename" --output "$network/$filename" || exit 1
+	done
+done
+
 for network in preview preprod mainnet; do
 	mkdir -p $network
 	cd $network && \
