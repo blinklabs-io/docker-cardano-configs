@@ -60,6 +60,7 @@ docker build -t cardano-configs .
 
 Configuration files are fetched from:
 - **Standard networks**: https://book.play.dev.cardano.org/environments/
+- **Musashi**: https://book.play.dev.cardano.org/environments-pre/leios/; the updater applies the existing container metrics binding normalization.
 - **DijkstraNet**: https://book.play.dev.cardano.org/environments-pre/dijkstra/
 - **Devnet**: maintained in this repository under `config/devnet`. It began as a copy of the hydra devnet (https://github.com/cardano-scaling/hydra) but now diverges on protocol version, slot and epoch timing, and Plutus cost models, so `update.sh` no longer re-fetches it.
 
