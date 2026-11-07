@@ -1,12 +1,12 @@
 {
   "Producers": [
     {
-      "addr": "91.99.86.236",
+      "addr": "relay-0.vector.testnet.apexfusion.org",
       "port": 5520,
       "valency": 1
     },
     {
-      "addr": "65.108.59.179",
+      "addr": "relay-1.vector.testnet.apexfusion.org",
       "port": 5520,
       "valency": 1
     }
