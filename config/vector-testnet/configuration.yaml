@@ -13,7 +13,7 @@ ConwayGenesisFile: genesis/shelley/genesis.conway.json
 ByronGenesisHash: c0629408cdd5e92063e217cb0ec9c3d663203fd4a62fa4569b8d9adb80d82d9b
 ShelleyGenesisHash: e0cee684c016ea3bb360b48878f48c2cc5961939bca0943be9e5162b186c039c
 AlonzoGenesisHash: 501e2702bddac606c398acf9733af26857de5c0424f6e421ea524cf7a0c30f99
-ConwayGenesisHash: 72a8e84c684b44e6b7530b6861582c5fa2db112f5b56e38505f987f34f8ffa66
+ConwayGenesisHash: 08eba59c8a725375761de7d8a690a6a6d3e14c82020b18f6014dacaca7b4445e
 #SocketPath: db/node.socket
 
 ##### Blockfetch Protocol
@@ -49,6 +49,19 @@ LastKnownBlockVersion-Minor: 0
 LastKnownBlockVersion-Alt: 0
 MaxKnownMajorProtocolVersion: 7
 
+##### Consensus / Ledger (10.4.x) #####
+ConsensusMode: PraosMode
+
+LedgerDB:
+  Backend: V2InMemory
+  # Optional (defaults shown):
+  # SnapshotInterval: 4320
+  # NumOfDiskSnapshots: 2
+  # QueryBatchSize: 100000
+
+##### Version info (optional) #####
+MinNodeVersion: 10.4.0
+
 ##### Logging configuration #####
 
 # Enable or disable logging overall
@@ -66,6 +79,7 @@ minSeverity:  Debug
 # Log items can be rendered with more or less verbose detail.
 # Verbosity ranges from MinimalVerbosity, NormalVerbosity to MaximalVerbosity
 TracingVerbosity: NormalVerbosity
+UseTraceDispatcher: False
 
 # The system supports a number of backends for logging and monitoring.
 # This setting lists the backends that will be available to use in the
@@ -144,10 +158,6 @@ rotation:
 
 
 ##### Coarse grained logging control #####
-
-# Trace output from whole subsystems can be enabled/disabled using the following
-# settings. This provides fairly coarse grained control, but it is relatively
-# efficient at filtering out unwanted trace output.
 
 # Trace BlockFetch client.
 TraceBlockFetchClient: True
