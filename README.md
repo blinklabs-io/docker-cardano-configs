@@ -73,8 +73,8 @@ Configuration files are fetched from:
   `./update.sh` refreshes all four networks, including their genesis files and topology.
   Prime uses the node 10.1.4 configuration, Vector testnet uses 10.4.1,
   and Vector mainnet uses 10.5.3.
-  Each source is pinned to an immutable upstream commit in the script; update
-  the pin deliberately when importing a newer configuration.
+  The Apex configurations enable metrics listeners; restrict those ports to
+  your monitoring network.
 - Standard networks: https://book.play.dev.cardano.org/environments/
 - Musashi: https://book.play.dev.cardano.org/environments-pre/leios/ (enabled by default; set `LEIOS_GO_BRR=false` to skip). The updater applies the existing container metrics binding normalization.
 - DijkstraNet: https://book.play.dev.cardano.org/environments-pre/dijkstra/

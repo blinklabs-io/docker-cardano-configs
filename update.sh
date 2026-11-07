@@ -11,12 +11,15 @@ apex_files=(
 	genesis/shelley/genesis.conway.json
 )
 
+# The Apex Fusion sources deliberately track each upstream repository's main
+# branch. This script exists to pull the current configuration, so do not pin
+# the URLs to commits or tags; review the resulting diff before committing it.
 for network in prime-testnet prime-mainnet vector-testnet vector-mainnet; do
 	case "$network" in
-		prime-testnet) source=prime-docker/d915b298b4225d5e8b85869e25fdb8ffe3fcfd9e/testnet/node-10.1.4 ;;
-		prime-mainnet) source=prime-mainnet-docker/3e1cf01f5bf8452772e3249ad99181b2c153c730/mainnet/node-10.1.4 ;;
-		vector-testnet) source=vector-docker/de7a1061fa7a914cd39577228327a0a81d5abd17/public-testnet/node-10.4.1 ;;
-		vector-mainnet) source=vector-mainnet-docker/9bf7c730409141ce53f0f849ac727be6b3f51ae8/mainnet/node-10.5.3 ;;
+		prime-testnet) source=prime-docker/main/testnet/node-10.1.4 ;;
+		prime-mainnet) source=prime-mainnet-docker/main/mainnet/node-10.1.4 ;;
+		vector-testnet) source=vector-docker/main/public-testnet/node-10.4.1 ;;
+		vector-mainnet) source=vector-mainnet-docker/main/mainnet/node-10.5.3 ;;
 	esac
 	baseurl="https://raw.githubusercontent.com/Apex-Fusion/$source/config/node"
 	stage=$(mktemp -d ".${network}.update.XXXXXX") || exit 1
