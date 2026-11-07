@@ -77,8 +77,8 @@ Configuration files are fetched from:
   your monitoring network.
   The Vector Conway genesis sets every DRep voting threshold to 0, so DRep
   approval is not required there. The constitutional committee and the SPO
-  thresholds are the only checks on governance actions. The files are the
-  upstream genesis and match their `ConwayGenesisHash`, so do not edit them.
+  thresholds are the only checks on governance actions. These values come from
+  the upstream repositories and are replaced whenever `./update.sh` runs.
 - Standard networks: https://book.play.dev.cardano.org/environments/
 - Musashi: https://book.play.dev.cardano.org/environments-pre/leios/ (enabled by default; set `LEIOS_GO_BRR=false` to skip). The updater applies the existing container metrics binding normalization.
 - DijkstraNet: https://book.play.dev.cardano.org/environments-pre/dijkstra/
